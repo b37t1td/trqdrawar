@@ -1,0 +1,25 @@
+{
+  "name": "trqdrawar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b37t1td/trqdrawar.git"
+  },
+  "author": "Svetlana Linuxenko <linuxenko@yahoo.com> (http://www.linuxenko.pro)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/b37t1td/trqdrawar/issues"
+  },
+  "homepage": "https://github.com/b37t1td/trqdrawar#readme",
+  "dependencies": {
+    "bignumber.js": "^8.0.1",
+    "dotenv": "^6.1.0",
+    "mongoose": "^5.3.13",
+    "winston": "^3.1.0"
+  }
+}

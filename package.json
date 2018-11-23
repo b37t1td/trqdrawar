@@ -19,6 +19,8 @@
   "homepage": "https://github.com/b37t1td/trqdrawar#readme",
   "dependencies": {
     "bignumber.js": "^8.0.1",
+    "d3": "^5.7.0",
+    "d3-node": "^2.1.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "moment": "^2.22.2",

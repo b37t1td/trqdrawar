@@ -2,35 +2,41 @@
 * File Name     : index.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-23 18:27]
+* Last Modified : [2018-11-23 21:57]
 * Description   :  
 **********************************************************************************/
 require('dotenv').config();
-const { dayTotalPongs, allBots } = require('./api');
+const { dayTotalBuyPongs, allBots } = require('./api');
 const { hourlyBar } = require('./pongsChart');
 
-(async () => {
+const express = require('express')
 
-  let bots = await allBots();
-  let bot = bots[0];
-  let pongs = await dayTotalPongs(bot);
-  hourlyBar(pongs);
-})();
+const port = process.env.PORT || 3000
+const app = express()
 
+app.get('/day/buy/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  let pongs = await dayTotalBuyPongs(id);
+  let bar = hourlyBar({ data: pongs });
 
-//const express = require('express')
-//const { dayTotalPongs } = require('./api');
-//
-//const port = process.env.PORT || 3000
-//const app = express()
-//
-//app.get('/total/pong/:id', async (req, res) => {
-//  const id = Number(req.params.id);
-//  let pongs = await dayTotalPongs(id);
-//  process.nextTick(() => res.json(pongs));
-//});
-//
-//app.listen(port, err => {
-//    if (err) throw err
-//    console.log(`> Ready On Server 0.0.0.0:${port}`)
-//})
+  res.setHeader('Content-Type', 'image/svg+xml');
+  process.nextTick(() => res.send(bar));
+});
+
+app.get('/day/total/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  let pongs = await dayTotalPongs(id);
+  let bar = hourlyBar({ data: pongs });
+
+  res.setHeader('Content-Type', 'image/svg+xml');
+  process.nextTick(() => res.send(bar));
+});
+
+app.get('/', async(req, res) => {
+
+});
+
+app.listen(port, err => {
+    if (err) throw err
+    console.log(`> Ready On Server 0.0.0.0:${port}`)
+});

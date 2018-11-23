@@ -2,17 +2,21 @@
 * File Name     : index.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-24 00:47]
+* Last Modified : [2018-11-24 01:02]
 * Description   :  
 **********************************************************************************/
 require('dotenv').config();
 const { dayTotalBuyPongs, dayTotalPongs, weekMoney, allBots } = require('./api');
 const { hourlyBar } = require('./pongsChart');
 
-const express = require('express')
+const express = require('express');
+const hbs = require('express-handlebars');
 
-const port = process.env.PORT || 3000
-const app = express()
+const port = process.env.PORT || 3000;
+const app = express();
+
+app.engine('handlebars', hbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 app.get('/day/buy/:id', async (req, res) => {
   const id = Number(req.params.id);
@@ -35,13 +39,19 @@ app.get('/day/total/:id', async (req, res) => {
 app.get('/week/:id', async(req, res) => {
   const id = Number(req.params.id);
   let data = await weekMoney(id);
-
-  console.log(data);
   process.nextTick(() => res.json(data));
 });
 
 app.get('/', async(req, res) => {
-
+  const bots = await allBots();
+  const data = [];
+  for (let b of bots) {
+    data.push({
+      id: b,
+      ww: await weekMoney(b)
+    });
+  }
+  res.render('home', { data } );
 });
 
 app.listen(port, err => {

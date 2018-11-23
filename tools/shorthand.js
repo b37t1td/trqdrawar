@@ -2,7 +2,7 @@
 * File Name     : tools/shorthand.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-23 22:47]
-* Last Modified : [2018-11-24 00:41]
+* Last Modified : [2018-11-24 01:24]
 * Description   :  
 **********************************************************************************/
 

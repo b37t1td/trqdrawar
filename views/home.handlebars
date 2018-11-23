@@ -1,0 +1,25 @@
+<div class="container">
+
+  {{#each data}}
+    <div class="row">
+      <div class="card col s12">
+      <div class="col s12 m6">
+        <h4 class="center">{{id}}</h4>
+        <hr />
+        <table>
+          {{#each ww}}
+            <tr><td>{{day}}</td>
+            <td style="color:#9b59b6;">{{value}}</td></tr>
+          {{/each}}
+        </table>
+      </div>
+      <h4>&nbsp;</h4>
+      <div class="col s12 m6 center">
+        <img src="/day/buy/{{id}}">
+        <img src="/day/total/{{id}}">
+      </div>
+      </div>
+    </div>
+  {{/each}}
+
+</div>

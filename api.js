@@ -2,7 +2,7 @@
 * File Name     : api.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:34]
-* Last Modified : [2018-11-24 00:48]
+* Last Modified : [2018-11-24 01:25]
 * Description   :  
 **********************************************************************************/
 const { Event, Pong } = require('./db');
@@ -93,18 +93,18 @@ async function dayTotalPongs(id) {
 
 async function weekMoney(id) {
   let lastRecord = await Event.findOne().sort({ created: -1 });
-  let start = moment(lastRecord.created).subtract(6, 'days').startOf('day').minutes(0).utc();
-  let stop = moment(lastRecord.created).subtract(5, 'days').startOf('day').utc();
+  let start = moment(lastRecord.created).subtract(7, 'days').startOf('day').minutes(0).utc();
+  let stop = moment(lastRecord.created).subtract(6, 'days').startOf('day').utc();
   let out = [];
 
   for (let i = 0; i < 7; i++) {
     let data = await Event.find({ id, event_type: 3, profit_amount: { $ne: null },
-      event_date: { $gte: start.unix(), $lte: stop.unix() }}, ['purchase_price']);
+      event_date: { $gte: start.unix(), $lte: stop.unix() }}, ['profit_amount']);
 
     let v = {
-      day: moment(stop).fromNow(),
+      day: i === 6 ? 'today' : moment(stop).fromNow(),
       value: data.reduce(function(a,b) {
-        return a.plus(SBig(b.purchase_price));
+        return a.plus(SBig(b.profit_amount));
       }, SBig(0))
     };
 
@@ -120,7 +120,7 @@ async function weekMoney(id) {
     stop.add(1, 'day');
   }
 
-  return out;
+  return out.reverse();
 }
 
 module.exports.dayTotalBuyPongs = dayTotalBuyPongs;

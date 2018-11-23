@@ -2,7 +2,7 @@
 * File Name     : pongsChart.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-23 18:25]
-* Last Modified : [2018-11-23 22:01]
+* Last Modified : [2018-11-23 22:24]
 * Description   :  
 **********************************************************************************/
 const D3Node = require('d3-node');
@@ -31,7 +31,6 @@ function line({
     container: _container,
   });
 
-  console.log(data);
   const d3 = d3n.d3;
 
   const width = _width - _margin.left - _margin.right;

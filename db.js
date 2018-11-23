@@ -2,7 +2,7 @@
 * File Name     : db.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-22 21:32]
+* Last Modified : [2018-11-22 21:48]
 * Description   :  
 **********************************************************************************/
 
@@ -55,4 +55,4 @@ async function instance() {
 module.exports.Pong = Pong;
 module.exports.Share = Share;
 module.exports.Event = Event;
-module.exports.instance = instance;
+module.exports.instance = (async () => await instance())();

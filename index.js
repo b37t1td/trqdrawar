@@ -2,7 +2,7 @@
 * File Name     : index.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-24 01:02]
+* Last Modified : [2018-11-24 03:02]
 * Description   :  
 **********************************************************************************/
 require('dotenv').config();
@@ -27,7 +27,7 @@ app.get('/day/buy/:id', async (req, res) => {
   process.nextTick(() => res.send(bar));
 });
 
-app.get('/day/total/:id', async (req, res) => {
+app.get(['/day/total/:id/*', '/day/total/:id' ], async (req, res) => {
   const id = Number(req.params.id);
   let pongs = await dayTotalPongs(id);
   let bar = hourlyBar({ data: pongs, color: 'grey' });

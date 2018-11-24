@@ -2,7 +2,7 @@
 * File Name     : api.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:34]
-* Last Modified : [2018-11-24 01:30]
+* Last Modified : [2018-11-24 02:08]
 * Description   :  
 **********************************************************************************/
 const { Event, Pong } = require('./db');
@@ -102,7 +102,7 @@ async function weekMoney(id) {
       event_date: { $gte: start.unix(), $lte: stop.unix() }}, ['profit_amount']);
 
     let v = {
-      day: i === 6 ? 'today' : moment(stop).fromNow(),
+      day: i === 6 ? 'today' : moment(start).fromNow(),
       value: data.reduce(function(a,b) {
         return a.plus(SBig(b.profit_amount));
       }, SBig(0))

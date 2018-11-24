@@ -2,7 +2,7 @@
 * File Name     : index.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-24 15:32]
+* Last Modified : [2018-11-24 19:17]
 * Description   :  
 **********************************************************************************/
 require('dotenv').config();
@@ -66,6 +66,7 @@ app.get('/tv', async(req, res) => {
   for (let b of bots) {
     data.push({
       id: b,
+      name: String(b).replace(/^\d{7}/, 'xxxxxx'),
       ww: await todayMoney(b)
     });
   }

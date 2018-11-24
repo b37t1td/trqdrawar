@@ -2,7 +2,7 @@
 * File Name     : api.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:34]
-* Last Modified : [2018-11-24 15:19]
+* Last Modified : [2018-11-24 19:24]
 * Description   :  
 **********************************************************************************/
 const { Event, Pong } = require('./db');
@@ -49,8 +49,8 @@ function st(a) {
 
 async function dayTotalBuyPongs(id) {
   let lastRecord = await Pong.findOne().sort({ created: -1 });
-  let start = moment(lastRecord.created).subtract(24, 'hours').utc();
-  let stop = moment(lastRecord.created).subtract(23, 'hour').utc();
+  let start = moment(lastRecord.created).subtract(23, 'hours').startOf('hour').utc();
+  let stop = moment(lastRecord.created).subtract(23, 'hour').endOf('hour').utc();
   let out = [];
 
   for (let i = 0; i < 24; i++) {
@@ -71,8 +71,8 @@ async function dayTotalBuyPongs(id) {
 
 async function dayTotalPongs(id) {
   let lastRecord = await Pong.findOne().sort({ created: -1 });
-  let start = moment(lastRecord.created).subtract(24, 'hours').startOf('hour').utc();
-  let stop = moment(lastRecord.created).subtract(23, 'hour').startOf('hour').utc();
+  let start = moment(lastRecord.created).subtract(23, 'hours').startOf('hour').utc();
+  let stop = moment(lastRecord.created).subtract(23, 'hour').endOf('hour').utc();
   let out = [];
 
   for (let i = 0; i < 24; i++) {

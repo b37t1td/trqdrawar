@@ -6,26 +6,68 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>.:TAGGED:PLAYERS:.</title>
-    <meta http-equiv="refresh" content="10">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
 
  <div class="row">
 {{#each data}}
-    <div class="card col m4">
+  <div id="{{id}}" class="card col m4">
       <h5 class="center">{{id}}</h5>
       <ul class="collection">
         <li class="collection-item center">
-          <span class="" style="color:#9b59b6;">{{ww.value}}</span>
+          <span class="pet-value" style="color:#9b59b6;">{{ww.value}}</span>
         </li>
       </ul>
       <div class="center col s12">
-        <img src="/day/buy/{{id}}">
-        <img src="/day/total/{{id}}">
+        <img class="pet-buy" src="/day/buy/{{id}}">
+        <img class="pet-total" src="/day/total/{{id}}">
       </div>
      </div>
 {{/each}}
   </div>
+
+  <script>
+    $(document).ready(function() {
+      var ids = $('div.card').map(function() { return $(this).attr('id'); }).get();
+
+      function updateValue(id) {
+        $.get('/day/money/'+ id).then(function(v) {
+          $('#' + id +' .pet-value').html(v.value);
+        });
+      }
+
+      function updateBuys(id) {
+        var img = document.createElement('img');
+        img.onload = function() {
+          $('#' + id +' img.pet-buy').replaceWith(img);
+        }
+        img.classList.add('pet-buy');
+        img.setAttribute('src', '/day/buy/' + id);
+      }
+
+      function updateTotals(id) {
+        var img = document.createElement('img');
+        img.onload = function() {
+          $('#' + id +' img.pet-total').replaceWith(img);
+        }
+        img.classList.add('pet-total');
+        img.setAttribute('src', '/day/total/' + id);
+      }
+
+      function update() {
+        for(var i = 0; i < ids.length; i++) {
+          var id = ids[i];
+          updateValue(id);
+          updateBuys(id);
+          updateTotals(id);
+        }
+      }
+
+      setInterval( update, 5000);
+
+    });
+  </script>
 
   </body>
 </html>

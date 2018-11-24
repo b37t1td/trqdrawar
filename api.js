@@ -2,7 +2,7 @@
 * File Name     : api.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:34]
-* Last Modified : [2018-11-24 15:07]
+* Last Modified : [2018-11-24 15:19]
 * Description   :  
 **********************************************************************************/
 const { Event, Pong } = require('./db');
@@ -71,8 +71,8 @@ async function dayTotalBuyPongs(id) {
 
 async function dayTotalPongs(id) {
   let lastRecord = await Pong.findOne().sort({ created: -1 });
-  let start = moment(lastRecord.created).subtract(23, 'hours').startOf('hour').utc();
-  let stop = moment(lastRecord.created).subtract(22, 'hour').startOf('hour').utc();
+  let start = moment(lastRecord.created).subtract(24, 'hours').startOf('hour').utc();
+  let stop = moment(lastRecord.created).subtract(23, 'hour').startOf('hour').utc();
   let out = [];
 
   for (let i = 0; i < 24; i++) {

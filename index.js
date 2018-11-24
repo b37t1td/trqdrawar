@@ -2,7 +2,7 @@
 * File Name     : index.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-24 15:05]
+* Last Modified : [2018-11-24 15:32]
 * Description   :  
 **********************************************************************************/
 require('dotenv').config();
@@ -52,6 +52,12 @@ app.get('/', async(req, res) => {
     });
   }
   res.render('home', { data } );
+});
+
+app.get('/day/money/:id', async(req, res) => {
+  const id = Number(req.params.id);
+  let m = await todayMoney(id)
+  process.nextTick(() => res.json(m));
 });
 
 app.get('/tv', async(req, res) => {

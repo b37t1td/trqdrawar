@@ -2,7 +2,7 @@
 * File Name     : api.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:34]
-* Last Modified : [2018-11-24 02:08]
+* Last Modified : [2018-11-24 15:07]
 * Description   :  
 **********************************************************************************/
 const { Event, Pong } = require('./db');
@@ -123,7 +123,33 @@ async function weekMoney(id) {
   return out.reverse();
 }
 
+async function todayMoney(id) {
+  let lastRecord = await Event.findOne().sort({ created: -1 });
+  let start = moment(lastRecord.created).startOf('day').utc();
+  let stop = moment(lastRecord.created).utc();
+  let out = [];
+
+  let data = await Event.find({ id, event_type: 3, profit_amount: { $ne: null },
+      event_date: { $gte: start.unix(), $lte: stop.unix() }}, ['profit_amount']);
+
+    let v = {
+      day: 'today',
+      value: data.reduce(function(a,b) {
+        return a.plus(SBig(b.profit_amount));
+      }, SBig(0))
+    };
+
+    if (v.value.isGreaterThan(SBig('1'))) {
+      v.value = v.value.toShort(v.value);
+    } else {
+      v.value = '-';
+    }
+
+  return v;
+}
+
 module.exports.dayTotalBuyPongs = dayTotalBuyPongs;
 module.exports.dayTotalPongs = dayTotalPongs;
 module.exports.weekMoney = weekMoney;
+module.exports.todayMoney = todayMoney;
 module.exports.allBots = allBots;

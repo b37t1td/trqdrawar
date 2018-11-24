@@ -2,11 +2,11 @@
 * File Name     : index.js
 * Created By    : Svetlana Linuxenko, <svetlana@linuxenko.pro>, www.linuxenko.pro
 * Creation Date : [2018-11-22 21:31]
-* Last Modified : [2018-11-24 03:02]
+* Last Modified : [2018-11-24 15:05]
 * Description   :  
 **********************************************************************************/
 require('dotenv').config();
-const { dayTotalBuyPongs, dayTotalPongs, weekMoney, allBots } = require('./api');
+const { dayTotalBuyPongs, todayMoney, dayTotalPongs, weekMoney, allBots } = require('./api');
 const { hourlyBar } = require('./pongsChart');
 
 const express = require('express');
@@ -52,6 +52,18 @@ app.get('/', async(req, res) => {
     });
   }
   res.render('home', { data } );
+});
+
+app.get('/tv', async(req, res) => {
+  const bots = await allBots();
+  const data = [];
+  for (let b of bots) {
+    data.push({
+      id: b,
+      ww: await todayMoney(b)
+    });
+  }
+  res.render('tv', { data, layout: false } );
 });
 
 app.listen(port, err => {

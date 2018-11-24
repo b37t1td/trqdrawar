@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>.:TAGGED:PLAYERS:.</title>
+    <meta http-equiv="refresh" content="10">
+  </head>
+  <body>
+
+ <div class="row">
+{{#each data}}
+    <div class="card col m4">
+      <h5 class="center">{{id}}</h5>
+      <ul class="collection">
+        <li class="collection-item center">
+          <span class="" style="color:#9b59b6;">{{ww.value}}</span>
+        </li>
+      </ul>
+      <div class="center col s12">
+        <img src="/day/buy/{{id}}">
+        <img src="/day/total/{{id}}">
+      </div>
+     </div>
+{{/each}}
+  </div>
+
+  </body>
+</html>
+
